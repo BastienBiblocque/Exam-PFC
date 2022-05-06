@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Titre de la page</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+<div id="game">
+    <button id="PierreButton">Pierre</button>
+    <button id="FeuilleButton">Feuille</button>
+    <button id="CiseauxButton">Ciseaux</button>
+    <div>
+        score :
+        joueurs :
+        <div id="scorePlayer"></div>
+        ia:
+        <div id="scoreIA">
+        </div>
+    </div>
+    <div>L'IA à jouer :</div>
+    <div id="IaPlay"></div>
+</div>
+</body>
+</html>
+<script>
+    let PierreButton = document.querySelector('#PierreButton');
+    let FeuilleButton = document.querySelector('#FeuilleButton');
+    let CiseauxButton = document.querySelector('#CiseauxButton');
+
+    let scorePlayerDisplay = document.querySelector('#scorePlayer');
+    let scoreIADisplay = document.querySelector('#scoreIA');
+
+    let IaPlay = document.querySelector('#IaPlay');
+
+    PierreButton.addEventListener("click", selectPierre);
+    FeuilleButton.addEventListener("click", selectFeuille);
+    CiseauxButton.addEventListener("click", selectCiseaux);
+
+
+    const P = "Pierre";
+    const F = "Feuille";
+    const C = "Ciseaux";
+
+    const coups = [P,C,F];
+
+    function joueCoupAleatoire() {
+        return parseInt(Math.random() * coups.length);
+    }
+    let scorePlayer = 0;
+    let scoreIA = 0;
+
+    function selectPierre() {
+        jouer(0);
+    }function selectFeuille() {
+        jouer(1);
+    }function selectCiseaux() {
+        jouer(2);
+    }
+
+    function jouer(selectUsers) {
+        selectIa = joueCoupAleatoire();
+        IaPlay.innerHTML = coups[selectIa];
+
+        if ((selectUsers === 0 && selectIa === 2) || (selectUsers === 1 && selectIa === 0) || (selectUsers === 2 && selectIa === 1) ) {
+            scorePlayer++;
+            console.log('you score');
+        } if ((selectIa === 0 && selectUsers === 2) || (selectIa === 1 && selectUsers === 0) || (selectIa === 2 && selectUsers === 1)){
+            scoreIA++;
+            console.log('IA score');
+        } if (scoreIA === 3 ) {
+            console.log('you loose');
+            resetScore();
+        } if (scorePlayer === 3) {
+            console.log('you win');
+            resetScore();
+        }
+        scorePlayerDisplay.innerText = scorePlayer;
+        scoreIADisplay.innerText = scoreIA;
+
+    }
+
+    function resetScore() {
+        scorePlayer = 0;
+        scoreIA = 0;
+    }
+
+</script>
